@@ -1,20 +1,27 @@
 package com.example.templateadmin.controller;
 
+import com.example.templateadmin.controller.vo.Result;
+import com.example.templateadmin.entity.SysUser;
 import com.example.templateadmin.service.AdminService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-//    @RequestMapping("/edit")
+    //    @RequestMapping("/edit")
 //    public String adminEdit(String id) {
 //        System.out.println("id = " + id);
 //        return "admin-edit";
@@ -25,13 +32,19 @@ public class AdminController {
 //        return "admin-add";
 //    }
 //
-//    @RequestMapping(value = "/list", method = RequestMethod.GET)
-//    public String adminList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
-//        PageHelper.startPage(pageNum, 10);
-//        PageInfo<SysUser> adminList = adminService.findAllSysUsers().toPageInfo();
-//        model.addAttribute("adminList", adminList);
-//        return "admin-list";
-//    }
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Result adminList(int limit, int page) {
+        PageHelper.startPage(page, limit);
+        Result<List> result = new Result<>();
+
+        PageInfo<SysUser> adminList = adminService.findAllSysUsers().toPageInfo();
+
+        result.setCode(0);
+        result.setMsg("success");
+        result.setCount((int) adminList.getTotal());
+        result.setData(adminList.getList());
+        return result;
+    }
 //
 //    @RequestMapping("/cate")
 //    public String adminCate() {

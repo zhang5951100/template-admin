@@ -79,6 +79,15 @@
     </dependencies>
 
     <build>
+        <!--配置 mybatis 的 xml 文件一起编译-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
