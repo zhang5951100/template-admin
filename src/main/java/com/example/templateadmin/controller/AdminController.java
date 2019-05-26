@@ -3,7 +3,6 @@ package com.example.templateadmin.controller;
 import com.example.templateadmin.controller.vo.Result;
 import com.example.templateadmin.entity.SysUser;
 import com.example.templateadmin.service.AdminService;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class AdminController {
 //
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result adminList(int limit, int page) {
-        PageHelper.startPage(page, limit);
+//        PageHelper.startPage(page, limit);
         Result<List> result = new Result<>();
 
         PageInfo<SysUser> adminList = adminService.findAllSysUsers().toPageInfo();
@@ -55,11 +54,11 @@ public class AdminController {
 //    public String adminRule() {
 //        return "admin-rule";
 //    }
-//
-//    @RequestMapping("/role")
-//    public String adminRole() {
-//        return "admin-role";
-//    }
+
+    @RequestMapping("/role")
+    public String adminRole() {
+        return "admin-role";
+    }
 //
 //    @RequestMapping("/role/edit")
 //    public String roleEdit() {
